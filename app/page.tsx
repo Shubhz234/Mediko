@@ -1,12 +1,14 @@
 "use client";
 
-
 import { motion } from "motion/react";
 import { FeatureBentoGrid } from "./_components/FeatureBentoGrid";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="relative mx-auto my-10 flex flex-col items-center justify-center">
+    <div className="relative mx-auto mb-10 flex flex-col items-center justify-center">
       <Navbar />
       <div className="absolute inset-y-0 left-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
         <div className="absolute top-0 h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
@@ -18,24 +20,42 @@ export default function Home() {
         <div className="absolute mx-auto h-px w-40 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
       </div>
       <div className="px-4 py-10 md:py-20">
-        <h1 className="relative z-10 mx-auto max-w-4xl text-center text-2xl font-bold text-slate-700 md:text-4xl lg:text-7xl dark:text-slate-300">
-          {"Revolutionize patient care with AI-powered solutions"
-            .split(" ")
-            .map((word, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
-                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                transition={{
-                  duration: 0.3,
-                  delay: index * 0.1,
-                  ease: "easeInOut",
-                }}
-                className="mr-2 inline-block"
-              >
-                {word}
-              </motion.span>
-            ))}
+        <h1 className="relative z-10 mx-auto max-w-4xl text-center text-2xl font-bold text-slate-800 md:text-4xl lg:text-7xl dark:text-slate-300 capitalize">
+          {
+            "Transform healthcare with Ai voice mediko agent"
+              .split(" ")
+              .map((word, index) =>
+                word.toLowerCase() === "mediko" ? (
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
+                    animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                    transition={{
+                      duration: 0.3,
+                      delay: index * 0.1,
+                      ease: "easeInOut",
+                    }}
+                    className="mr-2 inline-block bg-gradient-to-r from-green-500 via-green-600 to-green-800 bg-clip-text text-transparent border-b-4 border-green-700"
+                  >
+                    {word}
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
+                    animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                    transition={{
+                      duration: 0.3,
+                      delay: index * 0.1,
+                      ease: "easeInOut",
+                    }}
+                    className="mr-2 inline-block"
+                  >
+                    {word}
+                  </motion.span>
+                )
+              )
+          }
         </h1>
         <motion.p
           initial={{
@@ -50,28 +70,27 @@ export default function Home() {
           }}
           className="relative z-10 mx-auto max-w-xl py-4 text-center text-lg font-normal text-neutral-600 dark:text-neutral-400"
         >
-          Delivery of personalized healthcare solutions powered by AI, ensuring better patient outcomes and streamlined processes.
+          Provide 24/7 intelligent support using conversational AI. Triage Symptoms, Book appointments, and deliver empathetic care with Voice First Automation Mediko.
         </motion.p>
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          transition={{
-            duration: 0.3,
-            delay: 1,
-          }}
-          className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
-        >
-          <button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-            Explore Now
-          </button>
-          <button className="w-60 transform rounded-lg border border-gray-300 bg-white px-6 py-2 font-medium text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 dark:border-gray-700 dark:bg-black dark:text-white dark:hover:bg-gray-900">
-            Contact Support
-          </button>
-        </motion.div>
+        <Link href={'/sign-in'}>
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.3,
+              delay: 1,
+            }}
+            className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
+          >
+            <button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+              Get Started
+            </button>
+          </motion.div>
+        </Link>
         <motion.div
           initial={{
             opacity: 0,
@@ -104,15 +123,35 @@ export default function Home() {
 }
 
 const Navbar = () => {
+  const { user } = useUser()
   return (
     <nav className="flex w-full items-center justify-between border-t border-b border-neutral-200 px-4 py-4 dark:border-neutral-800">
       <div className="flex items-center gap-2">
-        <div className="size-7 rounded-full bg-gradient-to-br from-violet-500 to-pink-500" />
-        <h1 className="text-base font-bold md:text-2xl">Aceternity UI</h1>
+        <div className="size-7 rounded-full bg-gradient-to-br from-red-500 to-white" />
+        <h1 className="text-base font-bold md:text-2xl">Mediko</h1>
       </div>
-      <button className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-        Login
-      </button>
+      {!user ?
+        <Link href={'/sign-in'}>
+          <button className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+            Login
+          </button>
+        </Link> :
+        <div className="flex items-center gap-5">
+          <Button>Dashboard</Button>
+          <div className="flex items-center justify-center rounded-full border-2 border-amber-400 p-1 shadow-lg transition-transform hover:scale-105" style={{ width: 48, height: 48 }}>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: {
+                    width: 38,
+                    height: 38,
+                  },
+                },
+              }}
+            />
+          </div>
+        </div>
+      }
     </nav>
   );
 };
