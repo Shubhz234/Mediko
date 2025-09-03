@@ -1,6 +1,9 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
@@ -10,8 +13,10 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import { ArrowRight } from 'lucide-react'
 
 const AddNewSessionDialog = () => {
+    const [note, setNote] = useState<string>()
     return (
         <Dialog>
             <DialogTrigger>
@@ -23,16 +28,23 @@ const AddNewSessionDialog = () => {
                     <DialogDescription asChild>
                         <div>
                             <h2>Add Symptoms or Any Other Details</h2>
-                            <Textarea placeholder='Add Details Here...' className='h-[200px] mt-1' />
+                            <Textarea
+                                placeholder='Add Details Here...'
+                                className='h-[200px] mt-1'
+                                onChange={(e) => setNote(e.target.value)}
+                            />
                         </div>
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button variant={'outline'}>Cancel</Button>
-                    <Button>Start</Button>
+                    <DialogClose>
+                        <Button variant={'outline'} className='cursor-pointer'>Cancel</Button>
+                    </DialogClose>
+                    <Button disabled={!note} className='cursor-pointer'> Next <ArrowRight /> </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
+
     )
 }
 
