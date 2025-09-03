@@ -137,7 +137,9 @@ const Navbar = () => {
           </button>
         </Link> :
         <div className="flex items-center gap-5">
-          <Button>Dashboard</Button>
+          <Link href={'/dashboard'}>
+            <Button>Dashboard</Button>
+          </Link>
           <div className="flex items-center justify-center rounded-full border-2 border-amber-400 p-1 shadow-lg transition-transform hover:scale-105" style={{ width: 48, height: 48 }}>
             <UserButton
               appearance={{
