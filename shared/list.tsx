@@ -1,4 +1,4 @@
-export const AIDoctorAgents = [
+export const AIDoctor = [
     {
         id: 1,
         specialist: "General Physician",
