@@ -1,29 +1,42 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useUser } from '@clerk/nextjs';
+import { UserDetailContext } from '@/context/UserDetailContext';
+
+export type UserDetails = {
+    name: string,
+    email: string,
+    credits: number
+}
 
 const Provider = ({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) => {
-    const {user} = useUser();
+    const { user } = useUser();
+    const [userDetail, setUserDetail] = useState<any>();
 
     useEffect(() => {
-      user&&CreateNewUser();
+        user && CreateNewUser();
     }, [user])
-    
 
-    const CreateNewUser = async() => {
+
+    const CreateNewUser = async () => {
         // Logic to create a new user
         const result = await axios.post('/api/users');
-        console.log(result.data)
+        // console.log(result.data)
+        setUserDetail(result.data);
     }
 
     return (
-        <div>{children}</div>
+        <div>
+            <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
+                {children}
+            </UserDetailContext.Provider>
+        </div>
     )
 }
 
