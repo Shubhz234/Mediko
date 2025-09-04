@@ -1,16 +1,22 @@
 import { openai } from "@/config/OpenAiModel";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { AIDoctor } from "@/shared/list";
 
 export async function POST(req: NextRequest) {
+    const { notes } = await req.json();
 
     try {
         const completion = await openai.chat.completions.create({
-            model: "${Model.GPT_4_Omni}",
+            model: "google/gemini-2.5-flash",
             messages: [
-                { role: "user", content: "Say this is a test" }
+                { role: "system", content:JSON.stringify(AIDoctor) },
+                { role: "user", content: "User Notes/Symptoms:" + notes + ", Depends on user notes and symptoms, Please suggest list of doctors, Return object in JSON on it" }
             ],
-        })
-    } catch (e) {
+        });
 
+        const rawResp = completion.choices[0].message;
+        return NextResponse.json(rawResp);
+    } catch (e) {
+        return NextResponse.json(e);
     }
 }
