@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
 
     try {
         const completion = await openai.chat.completions.create({
-            model: "google/gemini-2.5-flash",
+            model: "google/gemini-2.0-flash-exp:free",
             messages: [
                 { role: "system", content:JSON.stringify(AIDoctor) },
                 { role: "user", content: "User Notes/Symptoms:" + notes + ", Depends on user notes and symptoms, Please suggest list of doctors, Return object in JSON on it" }

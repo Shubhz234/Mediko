@@ -21,7 +21,7 @@ const AddNewSessionDialog = () => {
     const [Loading, setLoading] = useState(false)
     const onClickNext = async () => {
         setLoading(true)
-        const result = await axios.post('/api/suggest-doctors', {
+        const result = await axios.post('/api/suggest-doctor', {
             notes: note
         });
 
