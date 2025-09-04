@@ -2,24 +2,6 @@
 
 import React, { useState } from 'react'
 import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { ArrowRight } from 'lucide-react'
-import SelectDoctorDialog from './SelectDoctorDialog'
-
-const AddNewSessionDialog = () => {
-    const [note, setNote] = useState<string>('')
-    const [showDoctorDialog, setShowDoctorDialog] = useState(false)
-    const [showInitialDialog, setShowInitialDialog] = useState(false)
 
     const handleNext = () => {
         if (note.trim()) {
