@@ -4,9 +4,10 @@ import axios from 'axios';
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { doctorAgent } from '../../_components/DoctorAgentCard';
-import { Circle, PhoneCall } from 'lucide-react';
+import { Circle, PhoneCall, PhoneOff } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import Vapi from '@vapi-ai/web';
 
 type SessionDetail = {
   id: number,
@@ -20,6 +21,8 @@ type SessionDetail = {
 const MedicalVoiceAgent = () => {
   const { sessionId } = useParams();
   const [sessionDetails, setSessionDetails] = useState<SessionDetail>()
+  const [callStarted, setCallStarted] = useState(false)
+  const [vapiInstance, setVapiInstance] = useState<any>()
 
   useEffect(() => {
     sessionId && GetSessionDetails();
@@ -31,10 +34,45 @@ const MedicalVoiceAgent = () => {
     setSessionDetails(result.data)
   }
 
+  const StartCall = () => {
+    const vapi = new Vapi(process.env.NEXT_PUBLIC_VAPI_API_KEY!);
+    setVapiInstance(vapi);
+    vapi.start(process.env.NEXT_PUBLIC_VAPI_VOICE_ASSISTANT_ID!);
+    vapi.on('call-start', () => {
+      console.log('Call started')
+      setCallStarted(true);
+    });
+    vapi.on('call-end', () => {
+      console.log('Call ended')
+      setCallStarted(false);
+    });
+    vapi.on('message', (message) => {
+      if (message.type === 'transcript') {
+        console.log(`${message.role}: ${message.transcript}`);
+      }
+    });
+  }
+
+  const endCall = () => {
+    if (!vapiInstance) return;
+
+    console.log('Ending call...');
+
+    vapiInstance.stop();
+
+    vapiInstance.on('call-start');
+    vapiInstance.on('call-end');
+    vapiInstance.on('message');
+
+    setCallStarted(false);
+    setVapiInstance(null);
+
+  };
+
   return (
     <div className='p-5 border rounded-3xl bg-secondary'>
       <div className='flex justify-between items-center p-3 border-b'>
-        <h2 className='p-1 px-2 border rounded-md flex gap-2 items-center'><Circle className='size-4' /> Not Connected</h2>
+        <h2 className='p-1 px-2 border rounded-md flex gap-2 items-center'><Circle className={`size-4 rounded-full ${callStarted ? 'bg-green-500' : 'bg-red-500'}`} />{callStarted ? 'Connected...' : 'Not Connected'}</h2>
         <h2 className='font-bold text-xl text-gray-400'>00:00</h2>
       </div>
 
@@ -56,9 +94,13 @@ const MedicalVoiceAgent = () => {
             <h2 className='text-lg'>User Msg</h2>
           </div>
 
-          <Button className='mt-20'>
-            <PhoneCall/> Start Call
-          </Button>
+          {!callStarted ?
+            <Button className='mt-20' onClick={StartCall}>
+              <PhoneCall /> Start Call
+            </Button> :
+            <Button variant='destructive' className='mt-20' onClick={endCall}>
+              <PhoneOff /> End Call
+            </Button>}
         </div>
       }
     </div>
