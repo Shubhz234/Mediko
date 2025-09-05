@@ -40,7 +40,7 @@ const DoctorAgentCard = ({ doctorAgent }: Props) => {
 
             <div className="p-4 flex-1 flex flex-col">
                 <h3 className="font-semibold text-sm sm:text-base">{doctorAgent.specialist}</h3>
-                <p className="mt-1 text-xs text-gray-600 dark:text-gray-300 line-clamp-3">{doctorAgent.description}</p>
+                <p className="mt-1 text-xs text-gray-600 dark:text-gray-300 line-clamp-2">{doctorAgent.description}</p>
 
                 <div className="mt-4 flex items-center gap-3">
                     <Button className="flex-1 flex items-center justify-center gap-2">

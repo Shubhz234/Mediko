@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { ArrowRight, Loader2 } from 'lucide-react'
+import { ArrowRight, Loader2, Plus, PlusIcon } from 'lucide-react'
 import axios from 'axios'
 import { doctorAgent } from './DoctorAgentCard'
 import { SuggestedDoctorCard } from './SuggestedDoctorCard'
@@ -55,7 +55,7 @@ const AddNewSessionDialog = () => {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button className='mt-3'>+ Start a Consultantion</Button>
+                <Button className='mt-3'><PlusIcon />Start a Consultantion</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
