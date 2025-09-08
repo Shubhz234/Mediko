@@ -1,13 +1,14 @@
 "use client"
 
 import axios from 'axios';
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { doctorAgent } from '../../_components/DoctorAgentCard';
 import { Circle, Loader2, PhoneCall, PhoneOff } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { vapi } from '@/lib/vapi.sdk';
+import { toast } from 'sonner';
 
 type SessionDetail = {
   id: number,
@@ -31,7 +32,7 @@ const MedicalVoiceAgent = () => {
   const [liveTranscript, setLiveTranscript] = useState<string>()
   const [messages, setmessages] = useState<Messages[]>([])
   const [loading, setLoading] = useState(false)
-
+  const router = useRouter();
 
   useEffect(() => {
     sessionId && GetSessionDetails();
@@ -130,11 +131,15 @@ const MedicalVoiceAgent = () => {
     setLoading(false);
     setCurrentRole(null);
     setLiveTranscript('');
+
+    // Redirect to dashboard after call ends and report is generated
+    toast.success('Report generated successfully!');
+    router.replace('/dashboard');
   };
 
   const GenerateReport = async () => {
     // Function to generate and save the report after the call ends
-    
+
     const result = await axios.post('/api/medical-report', {
       messages: messages,
       sessionDetails: sessionDetails,
@@ -179,7 +184,7 @@ const MedicalVoiceAgent = () => {
             ))}
             {liveTranscript && liveTranscript?.length > 0 && <h2 className='text-lg capitalize'>{currentRole}: {liveTranscript}</h2>}
           </div>
-
+          
           {!callStarted ?
             <Button className='mt-20' onClick={StartCall} disabled={loading}>
               {loading ? <Loader2 className='animate-spin' /> : <PhoneCall />}
