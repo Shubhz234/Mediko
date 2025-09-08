@@ -27,7 +27,6 @@ const MedicalVoiceAgent = () => {
   const { sessionId } = useParams();
   const [sessionDetails, setSessionDetails] = useState<SessionDetail>()
   const [callStarted, setCallStarted] = useState(false)
-  const [vapiInstance, setVapiInstance] = useState<any>()
   const [currentRole, setCurrentRole] = useState<string | null>()
   const [liveTranscript, setLiveTranscript] = useState<string>()
   const [messages, setmessages] = useState<Messages[]>([])
@@ -44,16 +43,19 @@ const MedicalVoiceAgent = () => {
   }
 
   const StartCall = () => {
-    setVapiInstance(vapi);
-    vapi.start(process.env.NEXT_PUBLIC_VAPI_VOICE_ASSISTANT_ID!);
+    // Set up event listeners before starting the call
     vapi.on('call-start', () => {
       console.log('Call started')
       setCallStarted(true);
     });
+    
     vapi.on('call-end', () => {
       console.log('Call ended')
       setCallStarted(false);
+      setCurrentRole(null);
+      setLiveTranscript('');
     });
+    
     vapi.on('message', (message) => {
       const { role, transcriptType, transcript } = message;
       if (message.type === 'transcript') {
@@ -70,31 +72,40 @@ const MedicalVoiceAgent = () => {
       }
     });
 
-    vapiInstance.on('speech-start', () => {
+    vapi.on('speech-start', () => {
       console.log('Assistant started speaking');
-      setCurrentRole('Assistant');
+      setCurrentRole('assistant');
     });
-    vapiInstance.on('speech-end', () => {
+    
+    vapi.on('speech-end', () => {
       console.log('Assistant stopped speaking');
-      setCurrentRole('User');
+      setCurrentRole('user');
     });
+
+    // Start the call
+    vapi.start(process.env.NEXT_PUBLIC_VAPI_VOICE_ASSISTANT_ID!);
   }
 
   const endCall = () => {
-    if (!vapiInstance) return;
-
     console.log('Ending call...');
 
-    vapiInstance.stop();
+    // Stop the call
+    vapi.stop();
 
-    vapiInstance.on('call-start');
-    vapiInstance.on('call-end');
-    vapiInstance.on('message');
-
+    // Reset state
     setCallStarted(false);
-    setVapiInstance(null);
-
+    setCurrentRole(null);
+    setLiveTranscript('');
   };
+
+  // Cleanup event listeners on component unmount
+  useEffect(() => {
+    return () => {
+      if (callStarted) {
+        vapi.stop();
+      }
+    };
+  }, [callStarted]);
 
   return (
     <div className='p-5 border rounded-3xl bg-secondary'>
@@ -118,9 +129,9 @@ const MedicalVoiceAgent = () => {
 
           <div className='mt-12 overflow-y-auto flex flex-col items-center px-10 md:px-28 lg:52 xl:px-72'>
             {messages && messages.slice(-3).map((msg: Messages, i) => (
-              <h2 className='text-gray-400 p-1' key={i}>{msg.role} : {msg.text}</h2>
+              <h2 className='text-gray-400 p-1 capitalize' key={i}>{msg.role}: {msg.text}</h2>
             ))}
-            {liveTranscript && liveTranscript?.length > 0 && <h2 className='text-lg'>{currentRole} : {liveTranscript}</h2>}
+            {liveTranscript && liveTranscript?.length > 0 && <h2 className='text-lg capitalize'>{currentRole}: {liveTranscript}</h2>}
           </div>
 
           {!callStarted ?
