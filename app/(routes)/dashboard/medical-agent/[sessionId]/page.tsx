@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { doctorAgent } from '../../_components/DoctorAgentCard';
-import { Circle, PhoneCall, PhoneOff } from 'lucide-react';
+import { Circle, Loader2, PhoneCall, PhoneOff } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { vapi } from '@/lib/vapi.sdk';
@@ -30,6 +30,7 @@ const MedicalVoiceAgent = () => {
   const [currentRole, setCurrentRole] = useState<string | null>()
   const [liveTranscript, setLiveTranscript] = useState<string>()
   const [messages, setmessages] = useState<Messages[]>([])
+  const [loading, setLoading] = useState(false)
 
 
   useEffect(() => {
@@ -43,10 +44,14 @@ const MedicalVoiceAgent = () => {
   }
 
   const StartCall = () => {
+    setLoading(true);
+
     // Set up event listeners before starting the call
+    console.log('Starting call...');
     vapi.on('call-start', () => {
       console.log('Call started')
       setCallStarted(true);
+      setLoading(false);
     });
 
     vapi.on('call-end', () => {
@@ -111,17 +116,33 @@ const MedicalVoiceAgent = () => {
     vapi.start(VapiAgentConfig);
   }
 
-  const endCall = () => {
+  const endCall = async () => {
     console.log('Ending call...');
+    setLoading(true);
 
     // Stop the call
     vapi.stop();
 
     // Reset state
     setCallStarted(false);
+    const result = await GenerateReport();
+
+    setLoading(false);
     setCurrentRole(null);
     setLiveTranscript('');
   };
+
+  const GenerateReport = async () => {
+    // Function to generate and save the report after the call ends
+    
+    const result = await axios.post('/api/medical-report', {
+      messages: messages,
+      sessionDetails: sessionDetails,
+      sessionId: sessionId,
+    })
+    console.log(result.data);
+    return result.data;
+  }
 
   // Cleanup event listeners on component unmount
   useEffect(() => {
@@ -160,11 +181,12 @@ const MedicalVoiceAgent = () => {
           </div>
 
           {!callStarted ?
-            <Button className='mt-20' onClick={StartCall}>
-              <PhoneCall /> Start Call
+            <Button className='mt-20' onClick={StartCall} disabled={loading}>
+              {loading ? <Loader2 className='animate-spin' /> : <PhoneCall />}
+              Start Call
             </Button> :
-            <Button variant='destructive' className='mt-20' onClick={endCall}>
-              <PhoneOff /> End Call
+            <Button variant='destructive' className='mt-20' onClick={endCall} disabled={loading}>
+              {loading ? <Loader2 className='animate-spin' /> : <PhoneOff />} End Call
             </Button>}
         </div>
       }
