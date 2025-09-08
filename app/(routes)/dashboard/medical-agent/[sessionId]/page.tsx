@@ -86,13 +86,12 @@ const MedicalVoiceAgent = () => {
       name: 'AI Medical Voice Agent',
       firstMessage: "Hello! I am your AI Medical Voice Agent. How can I assist you today?",
       transcriber: {
-        provider: "deepgram",
-        model: "nova-2",
+        provider: "assembly-ai",
         language: "en",
       },
       voice: {
         provider: "vapi",
-        voiceId: "Neha",
+        voiceId: sessionDetails?.selectedDoctor?.voiceId,
         speed: 0.9,
       },
       model: {
