@@ -48,14 +48,14 @@ const MedicalVoiceAgent = () => {
       console.log('Call started')
       setCallStarted(true);
     });
-    
+
     vapi.on('call-end', () => {
       console.log('Call ended')
       setCallStarted(false);
       setCurrentRole(null);
       setLiveTranscript('');
     });
-    
+
     vapi.on('message', (message) => {
       const { role, transcriptType, transcript } = message;
       if (message.type === 'transcript') {
@@ -76,14 +76,40 @@ const MedicalVoiceAgent = () => {
       console.log('Assistant started speaking');
       setCurrentRole('assistant');
     });
-    
+
     vapi.on('speech-end', () => {
       console.log('Assistant stopped speaking');
       setCurrentRole('user');
     });
 
+    const VapiAgentConfig = {
+      name: 'AI Medical Voice Agent',
+      firstMessage: "Hello! I am your AI Medical Voice Agent. How can I assist you today?",
+      transcriber: {
+        provider: "deepgram",
+        model: "nova-2",
+        language: "en",
+      },
+      voice: {
+        provider: "vapi",
+        voiceId: "Neha",
+        speed: 0.9,
+      },
+      model: {
+        provider: 'openai',
+        model: 'gpt-4',
+        messages: [
+          {
+            role: 'system',
+            content: sessionDetails?.selectedDoctor?.agentPrompt,
+          }
+        ]
+      },
+    }
+
     // Start the call
-    vapi.start(process.env.NEXT_PUBLIC_VAPI_VOICE_ASSISTANT_ID!);
+    //@ts-ignore
+    vapi.start(VapiAgentConfig);
   }
 
   const endCall = () => {
