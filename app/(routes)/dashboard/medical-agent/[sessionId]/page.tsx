@@ -7,7 +7,7 @@ import { doctorAgent } from '../../_components/DoctorAgentCard';
 import { Circle, PhoneCall, PhoneOff } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import Vapi from '@vapi-ai/web';
+import { vapi } from '@/lib/vapi.sdk';
 
 type SessionDetail = {
   id: number,
@@ -44,7 +44,6 @@ const MedicalVoiceAgent = () => {
   }
 
   const StartCall = () => {
-    const vapi = new Vapi(process.env.NEXT_PUBLIC_VAPI_API_KEY!);
     setVapiInstance(vapi);
     vapi.start(process.env.NEXT_PUBLIC_VAPI_VOICE_ASSISTANT_ID!);
     vapi.on('call-start', () => {
