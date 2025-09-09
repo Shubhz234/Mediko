@@ -4,13 +4,15 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import AddNewSessionDialog from './AddNewSessionDialog'
 import axios from 'axios'
+import HistoryTable from './HistoryTable'
+import { SessionDetail } from '../medical-agent/[sessionId]/page'
 
 const HistoryList = () => {
-    const [HistoryList, setHistoryList] = useState([])
+    const [HistoryList, setHistoryList] = useState<SessionDetail[]>([])
 
     useEffect(() => {
         GetHistoryList()
-     }, [])
+    }, [])
 
     const GetHistoryList = async () => {
         const result = await axios.get('/api/session-chat?sessionId=all');
@@ -26,8 +28,10 @@ const HistoryList = () => {
                     <h2 className='font-bold text-xl'>No Recent Consultantions</h2>
                     <p>Its looks likke you haven't consult any doctors yet.</p>
                     <AddNewSessionDialog />
-                </div>
-                : <div>List</div>}
+                </div> :
+                <div>
+                    <HistoryTable HistoryList={HistoryList}/>
+                </div>}
         </div>
     )
 }

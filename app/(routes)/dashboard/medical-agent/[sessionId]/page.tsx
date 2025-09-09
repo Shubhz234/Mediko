@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { vapi } from '@/lib/vapi.sdk';
 import { toast } from 'sonner';
 
-type SessionDetail = {
+export type SessionDetail = {
   id: number,
   note: string,
   sessionId: string,
