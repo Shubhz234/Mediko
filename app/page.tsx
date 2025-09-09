@@ -2,158 +2,122 @@
 
 import { motion } from "motion/react";
 import { FeatureBentoGrid } from "./_components/FeatureBentoGrid";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { useUser, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="relative mx-auto mb-10 flex flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center">
       <Navbar />
-      <div className="absolute inset-y-0 left-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
-        <div className="absolute top-0 h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
-      </div>
-      <div className="absolute inset-y-0 right-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
-        <div className="absolute h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
-      </div>
-      <div className="absolute inset-x-0 bottom-0 h-px w-full bg-neutral-200/80 dark:bg-neutral-800/80">
-        <div className="absolute mx-auto h-px w-40 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-      </div>
-      <div className="px-4 py-10 md:py-20">
-        <h1 className="relative z-10 mx-auto max-w-4xl text-center text-2xl font-bold text-slate-800 md:text-4xl lg:text-7xl dark:text-slate-300 capitalize">
-          {
-            "Transform healthcare with Ai voice mediko agent"
-              .split(" ")
-              .map((word, index) =>
-                word.toLowerCase() === "mediko" ? (
-                  <motion.span
-                    key={index}
-                    initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
-                    animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                    transition={{
-                      duration: 0.3,
-                      delay: index * 0.1,
-                      ease: "easeInOut",
-                    }}
-                    className="mr-2 inline-block bg-gradient-to-r from-green-500 via-green-600 to-green-800 bg-clip-text text-transparent border-b-4 border-green-700"
-                  >
-                    {word}
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key={index}
-                    initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
-                    animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                    transition={{
-                      duration: 0.3,
-                      delay: index * 0.1,
-                      ease: "easeInOut",
-                    }}
-                    className="mr-2 inline-block"
-                  >
-                    {word}
-                  </motion.span>
-                )
-              )
-          }
-        </h1>
+
+      {/* Hero Section */}
+      <div className="relative z-10 w-full px-6 py-16 md:py-28 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mx-auto max-w-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 text-3xl md:text-5xl lg:text-7xl leading-tight"
+        >
+          Transform Healthcare with{" "}
+          <span className="bg-gradient-to-r from-emerald-400 via-emerald-600 to-emerald-800 bg-clip-text text-transparent">
+            AI Voice Mediko Agent
+          </span>
+        </motion.h1>
+
         <motion.p
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          transition={{
-            duration: 0.3,
-            delay: 0.8,
-          }}
-          className="relative z-10 mx-auto max-w-xl py-4 text-center text-lg font-normal text-neutral-600 dark:text-neutral-400"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="mx-auto mt-6 max-w-2xl text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed"
         >
-          Provide 24/7 intelligent support using conversational AI. Triage Symptoms, Book appointments, and deliver empathetic care with Voice First Automation Mediko.
+          Provide 24/7 intelligent support using conversational AI. Triage
+          symptoms, book appointments, and deliver empathetic care with
+          voice-first automation.
         </motion.p>
-        <Link href={'/sign-in'}>
-          <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            transition={{
-              duration: 0.3,
-              delay: 1,
-            }}
-            className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
-          >
-            <button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-              Get Started
-            </button>
-          </motion.div>
-        </Link>
+
+        {/* CTA Buttons */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 10,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.3,
-            delay: 1.2,
-          }}
-          className="relative z-10 mt-20 rounded-3xl border border-neutral-200 bg-neutral-100 p-4 shadow-md dark:border-neutral-800 dark:bg-neutral-900"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="mt-10 flex flex-wrap justify-center gap-4"
         >
-          <div className="w-full overflow-hidden rounded-xl border border-gray-300 dark:border-gray-700">
-            <img
-              src="https://assets.aceternity.com/pro/aceternity-landing.webp"
-              alt="Landing page preview"
-              className="aspect-[16/9] h-auto w-full object-cover"
-              height={1000}
-              width={1000}
-            />
-          </div>
+          <Link href="/sign-in">
+            <Button className="w-40 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-800 text-white shadow-md hover:shadow-lg hover:scale-[1.02] transition">
+              Get Started
+            </Button>
+          </Link>
+          <Link href="/learn-more">
+            <Button
+              variant="outline"
+              className="w-40 rounded-xl border border-neutral-300 bg-white text-slate-800 hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
+            >
+              Learn More
+            </Button>
+          </Link>
+        </motion.div>
+
+        {/* Preview Image */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
+          className="mt-20 mx-auto w-full max-w-4xl overflow-hidden rounded-2xl border border-neutral-200 shadow-lg dark:border-neutral-800"
+        >
+          <img
+            src="https://assets.aceternity.com/pro/aceternity-landing.webp"
+            alt="Platform preview"
+            className="aspect-[16/9] w-full object-cover"
+          />
         </motion.div>
       </div>
-      <FeatureBentoGrid />
+
+      {/* Features */}
+      <div className="px-6">
+        <FeatureBentoGrid />
+      </div>
     </div>
   );
 }
 
 const Navbar = () => {
-  const { user } = useUser()
+  const { user } = useUser();
   return (
-    <nav className="flex w-full items-center justify-between border-t border-b border-neutral-200 px-4 py-4 dark:border-neutral-800">
-      <div className="flex items-center gap-2">
-        <div className="size-7 rounded-full bg-gradient-to-br from-red-500 to-white" />
-        <h1 className="text-base font-bold md:text-2xl">Mediko</h1>
-      </div>
-      {!user ?
-        <Link href={'/sign-in'}>
-          <button className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-            Login
-          </button>
-        </Link> :
-        <div className="flex items-center gap-5">
-          <Link href={'/dashboard'}>
-            <Button>Dashboard</Button>
+    <nav className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/70 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-900/70">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <div className="size-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-800" />
+          <span className="text-lg font-extrabold text-slate-800 dark:text-slate-100">
+            Mediko
+          </span>
+        </Link>
+
+        {/* Right side */}
+        {!user ? (
+          <Link href="/sign-in">
+            <Button className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white">
+              Login
+            </Button>
           </Link>
-          <div className="flex items-center justify-center rounded-full border-2 border-amber-400 p-1 shadow-lg transition-transform hover:scale-105" style={{ width: 48, height: 48 }}>
+        ) : (
+          <div className="flex items-center gap-4">
+            <Link href="/dashboard">
+              <Button variant="default" className="rounded-lg">
+                Dashboard
+              </Button>
+            </Link>
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: {
-                    width: 38,
-                    height: 38,
-                  },
+                  avatarBox: { width: 36, height: 36 },
                 },
               }}
             />
           </div>
-        </div>
-      }
+        )}
+      </div>
     </nav>
   );
 };
