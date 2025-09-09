@@ -159,42 +159,94 @@ const MedicalVoiceAgent = () => {
   }, [callStarted]);
 
   return (
-    <div className='p-5 border rounded-3xl bg-secondary'>
-      <div className='flex justify-between items-center p-3 border-b'>
-        <h2 className='p-1 px-2 border rounded-md flex gap-2 items-center'><Circle className={`size-4 rounded-full ${callStarted ? 'bg-green-500' : 'bg-red-500'}`} />{callStarted ? 'Connected...' : 'Not Connected'}</h2>
-        <h2 className='font-bold text-xl text-gray-400'>00:00</h2>
-      </div>
-
-      {sessionDetails &&
-        <div className='flex items-center flex-col mt-10'>
-          <Image
-            src={sessionDetails?.selectedDoctor?.image}
-            alt={sessionDetails?.selectedDoctor?.specialist}
-            width={120}
-            height={120}
-            priority={true}
-            className='w-[100px] h-[100px] rounded-full object-cover'
-          />
-          <h2 className='font-bold text-lg mt-2'>{sessionDetails?.selectedDoctor?.specialist}</h2>
-          <p className='text-sm text-gray-400'>AI Medical Voice Agent</p>
-
-          <div className='mt-12 overflow-y-auto flex flex-col items-center px-10 md:px-28 lg:52 xl:px-72'>
-            {messages && messages.slice(-3).map((msg: Messages, i) => (
-              <h2 className='text-gray-400 p-1 capitalize' key={i}>{msg.role}: {msg.text}</h2>
-            ))}
-            {liveTranscript && liveTranscript?.length > 0 && <h2 className='text-lg capitalize'>{currentRole}: {liveTranscript}</h2>}
+    <div className='min-h-screen bg-gradient-to-br from-green-50/50 via-white to-blue-50/50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900'>
+      <div className='max-w-4xl mx-auto p-4 md:p-6'>
+        <div className='bg-white/90 backdrop-blur-sm dark:bg-gray-800/90 border border-gray-200/50 dark:border-gray-700/50 rounded-3xl shadow-2xl overflow-hidden'>
+          <div className='flex flex-col sm:flex-row justify-between items-center p-4 md:p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-green-50/50 to-blue-50/50 dark:from-gray-800/50 dark:to-gray-700/50'>
+            <div className='flex items-center gap-3 mb-3 sm:mb-0'>
+              <div className={`p-2 rounded-full ${callStarted ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30'}`}>
+                <Circle className={`size-4 ${callStarted ? 'text-green-600 fill-green-600' : 'text-red-600 fill-red-600'}`} />
+              </div>
+              <div>
+                <h2 className='font-semibold text-gray-800 dark:text-gray-200'>{callStarted ? 'Connected' : 'Not Connected'}</h2>
+                <p className='text-sm text-gray-600 dark:text-gray-400'>Voice consultation status</p>
+              </div>
+            </div>
+            <div className='text-center'>
+              <h2 className='font-bold text-2xl md:text-3xl text-gray-600 dark:text-gray-400 font-mono'>00:00</h2>
+              <p className='text-xs text-gray-500 dark:text-gray-500'>Duration</p>
+            </div>
           </div>
-          
-          {!callStarted ?
-            <Button className='mt-20' onClick={StartCall} disabled={loading}>
-              {loading ? <Loader2 className='animate-spin' /> : <PhoneCall />}
-              Start Call
-            </Button> :
-            <Button variant='destructive' className='mt-20' onClick={endCall} disabled={loading}>
-              {loading ? <Loader2 className='animate-spin' /> : <PhoneOff />} End Call
-            </Button>}
+
+          {sessionDetails &&
+            <div className='flex items-center flex-col p-6 md:p-10'>
+              <div className='relative mb-6'>
+                <div className={`absolute inset-0 rounded-full ${callStarted ? 'bg-green-400/20 animate-pulse' : 'bg-gray-300/20'} blur-xl`}></div>
+                <Image
+                  src={sessionDetails?.selectedDoctor?.image}
+                  alt={sessionDetails?.selectedDoctor?.specialist}
+                  width={120}
+                  height={120}
+                  priority={true}
+                  className='relative w-24 h-24 md:w-32 md:h-32 rounded-full object-cover shadow-2xl border-4 border-white dark:border-gray-700'
+                />
+              </div>
+              
+              <div className='text-center mb-8'>
+              <div className='w-full max-w-2xl bg-gray-50/50 dark:bg-gray-900/50 rounded-2xl p-4 md:p-6 mb-8 min-h-[200px] max-h-[300px] overflow-y-auto'>
+                <h3 className='font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center'>Conversation</h3>
+                <div className='space-y-3'>
+                  {messages && messages.slice(-3).map((msg: Messages, i) => (
+                    <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`max-w-[80%] p-3 rounded-2xl ${
+                        msg.role === 'user' 
+                          ? 'bg-green-500 text-white rounded-br-sm' 
+                          : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600 rounded-bl-sm'
+                      }`}>
+                        <p className='text-sm md:text-base'>{msg.text}</p>
+                        <p className='text-xs opacity-70 mt-1 capitalize'>{msg.role}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {liveTranscript && liveTranscript?.length > 0 && (
+                    <div className={`flex ${currentRole === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`max-w-[80%] p-3 rounded-2xl ${
+                        currentRole === 'user' 
+                          ? 'bg-green-400/70 text-white rounded-br-sm' 
+                          : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-bl-sm'
+                      } animate-pulse`}>
+                        <p className='text-sm md:text-base'>{liveTranscript}</p>
+                        <p className='text-xs opacity-70 mt-1 capitalize'>{currentRole} (typing...)</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              {!callStarted ?
+                <Button 
+                  className='bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-base md:text-lg' 
+                  onClick={StartCall} 
+                  disabled={loading}
+                  size="lg"
+                >
+                  {loading ? <Loader2 className='animate-spin mr-2' /> : <PhoneCall className="mr-2" />}
+                  Start Call
+                </Button> :
+                <Button 
+                  variant='destructive' 
+                  className='bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-base md:text-lg' 
+                  onClick={endCall} 
+                  disabled={loading}
+                  size="lg"
+                >
+                  {loading ? <Loader2 className='animate-spin mr-2' /> : <PhoneOff className="mr-2" />} 
+                  End Call
+                </Button>}
+            </div>
+          }
         </div>
-      }
+      </div>
     </div>
   )
 }
