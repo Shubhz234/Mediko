@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/table"
 import { SessionDetail } from '../medical-agent/[sessionId]/page'
 import moment from 'moment'
-import { Button } from '@/components/ui/button'
 import ViewReportDialog from './ViewReportDialog'
 
 type Props = {
@@ -21,7 +20,6 @@ const HistoryTable = ({ HistoryList }: Props) => {
     return (
         <div>
             <Table>
-                <TableCaption>Previous Consultation Report</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead>AI Medkio Specilist</TableHead>
