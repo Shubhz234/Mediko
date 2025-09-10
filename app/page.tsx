@@ -5,6 +5,7 @@ import { FeatureBentoGrid } from "./_components/FeatureBentoGrid";
 import { useUser, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import MedikoLogo from "@/context/MedikoLogo";
 
 export default function Home() {
   return (
@@ -87,11 +88,8 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/70 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-900/70">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="size-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-800" />
-          <span className="text-lg font-extrabold text-slate-800 dark:text-slate-100">
-            Mediko
-          </span>
+        <Link href="/">
+          <MedikoLogo />
         </Link>
 
         {/* Right side */}

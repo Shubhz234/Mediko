@@ -10,7 +10,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { SessionDetail } from '../medical-agent/[sessionId]/page'
 import moment from 'moment'
-import { Heart } from 'lucide-react'
+import { ClipboardCopy, Heart } from 'lucide-react'
 
 type Props = {
     record: SessionDetail
@@ -19,7 +19,7 @@ type Props = {
 const ViewReportDialog = ({ record }: Props) => {
     // Parse the report data from JSON
     const reportData = record.report as any;
-    
+
     // Extract data with fallbacks
     const sessionInfo = {
         doctor: record.selectedDoctor?.specialist || 'General Physician',
@@ -40,7 +40,7 @@ const ViewReportDialog = ({ record }: Props) => {
         <div>
             <Dialog>
                 <DialogTrigger>
-                    <Button variant={"link"}>View Report</Button>
+                    <Button variant={"outline"}><ClipboardCopy /> View Report</Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>

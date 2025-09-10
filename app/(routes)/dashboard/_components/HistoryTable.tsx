@@ -2,7 +2,6 @@ import React from 'react'
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -13,10 +12,13 @@ import moment from 'moment'
 import ViewReportDialog from './ViewReportDialog'
 
 type Props = {
-    HistoryList: SessionDetail[]
+    HistoryList: SessionDetail[],
+    sliceSize?: number
 }
 
-const HistoryTable = ({ HistoryList }: Props) => {
+const HistoryTable = ({ HistoryList, sliceSize  }: Props) => {
+    const displayList = sliceSize ? HistoryList.slice(0, sliceSize) : HistoryList
+
     return (
         <div>
             <Table>
@@ -25,16 +27,16 @@ const HistoryTable = ({ HistoryList }: Props) => {
                         <TableHead>AI Medkio Specilist</TableHead>
                         <TableHead>Description</TableHead>
                         <TableHead>Date</TableHead>
-                        <TableHead className="text-right">Action</TableHead>
+                        <TableHead className='text-center'>Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {HistoryList.map((record: SessionDetail, index: number) => (
-                        <TableRow>
+                    {displayList.map((record: SessionDetail, index: number) => (
+                        <TableRow key={index}>
                             <TableCell className="font-medium">{record.selectedDoctor?.specialist}</TableCell>
-                            <TableCell>{record.note}</TableCell>
+                            <TableCell className="max-w-[200px] truncate">{record.note}</TableCell>
                             <TableCell>{moment(new Date(record.createdOn)).fromNow()}</TableCell>
-                            <TableCell className="text-right"><ViewReportDialog record={record}/></TableCell>
+                            <TableCell className="text-center"><ViewReportDialog record={record} /></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

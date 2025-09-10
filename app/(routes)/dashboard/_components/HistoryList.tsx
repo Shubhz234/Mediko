@@ -17,7 +17,13 @@ const HistoryList = () => {
     const GetHistoryList = async () => {
         const result = await axios.get('/api/session-chat?sessionId=all');
         console.log(result.data);
-        setHistoryList(result.data)
+
+        // Filter out sessions where note or report is missing/null
+        const filteredData = result.data.filter(
+            (session: SessionDetail) => session.conversation?.length && session.report
+        );
+
+        setHistoryList(filteredData)
     }
 
     return (
@@ -35,7 +41,7 @@ const HistoryList = () => {
                             <AddNewSessionDialog />
                         </div> :
                         <div>
-                            <HistoryTable HistoryList={HistoryList} />
+                            <HistoryTable HistoryList={HistoryList} sliceSize={4} />
                         </div>}
                 </div>
             </div>

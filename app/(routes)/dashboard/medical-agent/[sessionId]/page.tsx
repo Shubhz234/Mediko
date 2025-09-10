@@ -11,6 +11,7 @@ import { vapi } from '@/lib/vapi.sdk';
 import { toast } from 'sonner';
 
 export type SessionDetail = {
+  conversation: Messages[],
   id: number,
   note: string,
   sessionId: string,
@@ -36,7 +37,7 @@ const MedicalVoiceAgent = () => {
 
   useEffect(() => {
     sessionId && GetSessionDetails();
-  }, [sessionId])
+  }, [sessionId]);
 
   const GetSessionDetails = async () => {
     const result = await axios.get('/api/session-chat?sessionId=' + sessionId);
@@ -46,6 +47,26 @@ const MedicalVoiceAgent = () => {
 
   const StartCall = () => {
     setLoading(true);
+
+    const handleError = (err: any) => {
+      console.error("Vapi error:", err);
+      setLoading(false);
+      setCallStarted(false);
+      setCurrentRole(null);
+      setLiveTranscript("");
+
+      if (err?.message?.toLowerCase().includes("network")) {
+        toast.error("⚠️ Network issue detected. Please check your connection.");
+      } else {
+        toast.error("Something went wrong with the call. Please try again.");
+      }
+
+      // Stop the call if an error occurs
+      vapi.stop();
+    };
+
+    // Attach error listener for this call
+    vapi.on("error", handleError);
 
     // Set up event listeners before starting the call
     console.log('Starting call...');
@@ -60,7 +81,12 @@ const MedicalVoiceAgent = () => {
       setCallStarted(false);
       setCurrentRole(null);
       setLiveTranscript('');
+
+
+      // Remove error listener when call ends
+      vapi.off("error", handleError);
     });
+
 
     vapi.on('message', (message) => {
       const { role, transcriptType, transcript } = message;
@@ -90,7 +116,7 @@ const MedicalVoiceAgent = () => {
 
     const VapiAgentConfig = {
       name: 'AI Medical Voice Agent',
-      firstMessage: "Hello! I am your AI Medical Voice Agent. How can I assist you today?",
+      firstMessage: "Hi, I'm your AI Medical Agent. Before we begin, may I know your name and age?",
       transcriber: {
         provider: "assembly-ai",
         language: "en",
@@ -113,8 +139,14 @@ const MedicalVoiceAgent = () => {
     }
 
     // Start the call
-    //@ts-ignore
-    vapi.start(VapiAgentConfig);
+    try {
+      //@ts-ignore
+      vapi.start(VapiAgentConfig);
+    } catch (error) {
+      console.error('Error starting the call:', error);
+      toast.error('Error starting the call. Please try again.');
+      setLoading(false);
+    }
   }
 
   const endCall = async () => {
@@ -179,12 +211,12 @@ const MedicalVoiceAgent = () => {
           <p className='text-sm text-gray-400'>AI Medical Voice Agent</p>
 
           <div className='mt-12 overflow-y-auto flex flex-col items-center px-10 md:px-28 lg:52 xl:px-72'>
-            {messages && messages.slice(-3).map((msg: Messages, i) => (
+            {messages && messages.slice(-2).map((msg: Messages, i) => (
               <h2 className='text-gray-400 p-1 capitalize' key={i}>{msg.role}: {msg.text}</h2>
             ))}
             {liveTranscript && liveTranscript?.length > 0 && <h2 className='text-lg capitalize'>{currentRole}: {liveTranscript}</h2>}
           </div>
-          
+
           {!callStarted ?
             <Button className='mt-20' onClick={StartCall} disabled={loading}>
               {loading ? <Loader2 className='animate-spin' /> : <PhoneCall />}

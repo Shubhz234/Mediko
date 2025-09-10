@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import MedikoLogo from "@/context/MedikoLogo";
 
 const menuOptions = [
 	{ id: 1, name: "Home", href: "/dashboard" },
@@ -22,13 +23,7 @@ const AppHeader = () => {
 			<div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-12 lg:px-20">
 				{/* Logo */}
 				<Link href="/dashboard" className="flex items-center gap-2">
-					<Image
-						src="/logo.svg"
-						alt="Mediko Logo"
-						width={160}
-						height={45}
-						className="cursor-pointer"
-					/>
+					<MedikoLogo />
 				</Link>
 
 				{/* Desktop Menu */}
