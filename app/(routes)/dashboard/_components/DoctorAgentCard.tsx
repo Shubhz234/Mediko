@@ -17,10 +17,9 @@ type Props = {
     doctorAgent: doctorAgent
 }
 
-
 const DoctorAgentCard = ({ doctorAgent }: Props) => {
     return (
-        <article className="bg-white dark:bg-slate-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02] overflow-hidden border border-neutral-200/50 dark:border-neutral-700">
+        <article className="group bg-white dark:bg-slate-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02] overflow-hidden border border-neutral-200/50 dark:border-neutral-700">
             <div className="relative">
                 <Image
                     src={doctorAgent.image}
