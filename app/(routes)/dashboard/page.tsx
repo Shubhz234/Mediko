@@ -7,14 +7,14 @@ import AddNewSessionDialog from "./_components/AddNewSessionDialog";
 
 const Dashboard = () => {
     return (
-        <div className="space-y-12">
+        <div className="space-y-16 min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-neutral-200/50">
+                <div className="space-y-2">
+                    <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">
                         My Dashboard
                     </h2>
-                    <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+                    <p className="text-lg text-neutral-600 dark:text-neutral-400">
                         Manage your sessions, view history, and explore your AI doctor agents.
                     </p>
                 </div>

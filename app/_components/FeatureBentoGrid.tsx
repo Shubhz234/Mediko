@@ -14,18 +14,42 @@ import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
 export function FeatureBentoGrid() {
   return (
-    <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
+    <div className="max-w-7xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-16"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+          Why Choose{" "}
+          <span className="bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent">
+            Mediko AI
+          </span>
+        </h2>
+        <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+          Experience the future of healthcare with our advanced AI-powered features
+        </p>
+      </motion.div>
+      <BentoGrid className="md:auto-rows-[22rem]">
       {items.map((item, i) => (
-        <BentoGridItem
-          key={i}
-          title={item.title}
-          description={item.description}
-          header={item.header}
-          className={cn("[&>p:text-lg]", item.className)}
-          icon={item.icon}
-        />
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: i * 0.1 }}
+          >
+            <BentoGridItem
+              title={item.title}
+              description={item.description}
+              header={item.header}
+              className={cn("[&>p:text-lg]", item.className)}
+              icon={item.icon}
+            />
+          </motion.div>
       ))}
-    </BentoGrid>
+      </BentoGrid>
+    </div>
   );
 }
 

@@ -58,24 +58,27 @@ const AddNewSessionDialog = () => {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button className='mt-3'><PlusIcon />Start a Consultantion</Button>
+                <Button className='px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300'>
+                    <PlusIcon className="mr-2" />
+                    Start a Consultation
+                </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-w-2xl rounded-2xl">
                 <DialogHeader>
-                    <DialogTitle>Add Basic Details</DialogTitle>
+                    <DialogTitle className="text-2xl font-bold text-slate-800">Add Basic Details</DialogTitle>
                     <DialogDescription asChild>
                         {!suggestedDoctors
-                            ? <div>
-                                <h2>Add Symptoms or Any Other Details</h2>
+                            ? <div className="space-y-4">
+                                <h2 className="text-lg font-semibold text-slate-700">Describe your symptoms or health concerns</h2>
                                 <Textarea
-                                    placeholder='Add Details Here...'
-                                    className='h-[200px] mt-1'
+                                    placeholder='Please describe your symptoms, concerns, or any other relevant details here...'
+                                    className='h-[200px] mt-2 rounded-xl border-neutral-300 focus:border-emerald-500 focus:ring-emerald-500'
                                     onChange={(e) => setNote(e.target.value)}
                                 />
                             </div> :
-                            <div>
-                                <h2>Select the Doctor</h2>
-                                <div className='grid grid-cols-3 gap-5'>
+                            <div className="space-y-6">
+                                <h2 className="text-lg font-semibold text-slate-700">Select the most suitable specialist</h2>
+                                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
                                     {suggestedDoctors.map((doctor, index) => (
                                         <SuggestedDoctorCard
                                             doctorAgent={doctor}
@@ -89,14 +92,27 @@ const AddNewSessionDialog = () => {
                         }
                     </DialogDescription>
                 </DialogHeader>
-                <DialogFooter>
+                <DialogFooter className="gap-3">
                     <DialogClose>
-                        <Button variant={'outline'} className='cursor-pointer'>Cancel</Button>
+                        <Button variant={'outline'} className='cursor-pointer px-6 py-2.5 rounded-xl'>Cancel</Button>
                     </DialogClose>
-                    {!suggestedDoctors ? <Button disabled={!note || Loading} className='cursor-pointer' onClick={() => onClickNext()}>
-                        Next {Loading ? <Loader2 className='animate-spin' /> : <ArrowRight />} </Button>
-                        : <Button disabled={Loading || !SelectedDoctor} className='cursor-pointer' onClick={() => onStartConsultation()}>Start Consultation
-                            {Loading ? <Loader2 className='animate-spin' /> : <ArrowRight />}
+                    {!suggestedDoctors ? 
+                        <Button 
+                            disabled={!note || Loading} 
+                            className='cursor-pointer px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 rounded-xl font-semibold' 
+                            onClick={() => onClickNext()}
+                        >
+                            {Loading ? <Loader2 className='animate-spin mr-2' /> : <ArrowRight className="mr-2" />}
+                            Next
+                        </Button>
+                        : 
+                        <Button 
+                            disabled={Loading || !SelectedDoctor} 
+                            className='cursor-pointer px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 rounded-xl font-semibold' 
+                            onClick={() => onStartConsultation()}
+                        >
+                            {Loading ? <Loader2 className='animate-spin mr-2' /> : <ArrowRight className="mr-2" />}
+                            Start Consultation
                         </Button>}
                 </DialogFooter>
             </DialogContent>

@@ -19,8 +19,8 @@ const AppHeader = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
-		<header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/70 backdrop-blur-md">
-			<div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-12 lg:px-20">
+		<header className="sticky top-0 z-50 w-full border-b border-neutral-200/50 bg-white/80 backdrop-blur-xl shadow-sm">
+			<div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-12 lg:px-20">
 				{/* Logo */}
 				<Link href="/dashboard" className="flex items-center gap-2">
 					<MedikoLogo />
@@ -32,7 +32,7 @@ const AppHeader = () => {
 						<Link
 							key={option.id}
 							href={option.href}
-							className="relative text-[15px] font-medium text-slate-700 transition-colors hover:text-emerald-600"
+							className="relative text-[15px] font-semibold text-slate-700 transition-all duration-300 hover:text-emerald-600 hover:scale-105"
 						>
 							{option.name}
 						</Link>
@@ -46,7 +46,7 @@ const AppHeader = () => {
 						<UserButton
 							appearance={{
 								elements: {
-									avatarBox: { width: 36, height: 36 },
+									avatarBox: { width: 40, height: 40 },
 								},
 							}}
 						/>
@@ -55,7 +55,7 @@ const AppHeader = () => {
 					{/* Mobile Menu Toggle */}
 					<button
 						onClick={() => setIsOpen(!isOpen)}
-						className="md:hidden p-2 rounded-md hover:bg-neutral-100"
+						className="md:hidden p-2 rounded-xl hover:bg-neutral-100 transition-colors duration-200"
 					>
 						{isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
 					</button>
@@ -70,25 +70,25 @@ const AppHeader = () => {
 						animate={{ opacity: 1, y: 0, scaleY: 1 }}
 						exit={{ opacity: 0, y: -10, scaleY: 0.95 }}
 						transition={{ duration: 0.25, ease: "easeInOut" }}
-						className="md:hidden border-t border-neutral-200 bg-white/70 backdrop-blur-md origin-top"
+						className="md:hidden border-t border-neutral-200/50 bg-white/90 backdrop-blur-xl origin-top shadow-lg"
 					>
-						<nav className="flex flex-col space-y-4 px-6 py-6">
+						<nav className="flex flex-col space-y-5 px-6 py-8">
 							{menuOptions.map((option) => (
 								<Link
 									key={option.id}
 									href={option.href}
 									onClick={() => setIsOpen(false)}
-									className="text-base font-medium text-slate-700 hover:text-emerald-600 transition"
+									className="text-base font-semibold text-slate-700 hover:text-emerald-600 transition-colors duration-200"
 								>
 									{option.name}
 								</Link>
 							))}
 							{/* User Button (Mobile) */}
-							<div>
+							<div className="pt-4 border-t border-neutral-200">
 								<UserButton
 									appearance={{
 										elements: {
-											avatarBox: { width: 36, height: 36 },
+											avatarBox: { width: 40, height: 40 },
 										},
 									}}
 								/>

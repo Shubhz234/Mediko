@@ -27,17 +27,17 @@ const HistoryList = () => {
     }
 
     return (
-        <div className="lg:col-span-2">
-            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
-                <h3 className="mb-4 text-lg font-semibold text-slate-800 dark:text-slate-100">
+        <div className="w-full">
+            <div className="rounded-3xl border border-neutral-200/50 bg-white/80 backdrop-blur-sm p-8 shadow-xl dark:border-neutral-800 dark:bg-neutral-900/80">
+                <h3 className="mb-6 text-2xl font-bold text-slate-800 dark:text-slate-100">
                     Recent History
                 </h3>
-                <div className='mt-10'>
+                <div className='mt-8'>
                     {HistoryList.length == 0 ?
-                        <div className='flex items-center justify-between flex-col p-7 border-dashed rounded-2xl border-2'>
-                            <Image src={'/medical-assistance.png'} alt='mediko' width={150} height={150} />
-                            <h2 className='font-bold text-xl'>No Recent Consultantions</h2>
-                            <p>Its looks likke you haven't consult any doctors yet.</p>
+                        <div className='flex items-center justify-center flex-col p-12 border-dashed rounded-3xl border-2 border-neutral-300 bg-gradient-to-br from-neutral-50 to-emerald-50/30'>
+                            <Image src={'/medical-assistance.png'} alt='mediko' width={180} height={180} className="mb-6" />
+                            <h2 className='font-bold text-2xl text-slate-800 mb-2'>No Recent Consultations</h2>
+                            <p className="text-neutral-600 mb-6 text-center max-w-md">It looks like you haven't consulted any doctors yet. Start your first consultation to get personalized medical advice.</p>
                             <AddNewSessionDialog />
                         </div> :
                         <div>

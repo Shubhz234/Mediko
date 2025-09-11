@@ -11,9 +11,10 @@ type Props = {
 export const SuggestedDoctorCard = ({ doctorAgent, setSelectedDoctor, selectedDoctor }: Props) => {
     return (
         <div
-            className={`flex flex-col items-center border rounded-2xl shadow p-5
-                 hover:border-blue-500 cursor-pointer
-                 ${selectedDoctor?.id === doctorAgent?.id ? 'border-blue-500' : ''}`}
+            className={`flex flex-col items-center border rounded-2xl shadow-lg p-6 cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.02]
+                 ${selectedDoctor?.id === doctorAgent?.id 
+                    ? 'border-emerald-500 bg-emerald-50 shadow-emerald-200' 
+                    : 'border-neutral-200 hover:border-emerald-300 bg-white'}`}
             onClick={() => setSelectedDoctor(doctorAgent)}
         >
             <Image
@@ -22,10 +23,10 @@ export const SuggestedDoctorCard = ({ doctorAgent, setSelectedDoctor, selectedDo
                 width={70}
                 height={70}
                 priority={true}
-                className='w-[50px] h-[50px] rounded-4xl object-cover'
+                className='w-[60px] h-[60px] rounded-full object-cover mb-3 border-2 border-white shadow-md'
             />
-            <h2 className='font-bold text-sm text-center'>{doctorAgent?.specialist}</h2>
-            <p className='text-xs text-center line-clamp-2'>{doctorAgent?.description}</p>
+            <h2 className='font-bold text-sm text-center text-slate-800 mb-2'>{doctorAgent?.specialist}</h2>
+            <p className='text-xs text-center line-clamp-2 text-neutral-600 leading-relaxed'>{doctorAgent?.description}</p>
         </div>
     )
 }
