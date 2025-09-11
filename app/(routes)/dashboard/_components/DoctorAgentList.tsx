@@ -34,18 +34,3 @@ const DoctorAgentList = () => {
 };
 
 export default DoctorAgentList;
-
-          AI Specialist Doctors
-        </h2>
-      </div>
-
-      <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {AIDoctor.map((doctor) => (
-          <DoctorAgentCard key={doctor.id} doctorAgent={doctor} />
-        ))}
-      </div>
-    </section>
-  );
-};
-
-export default DoctorAgentList;
