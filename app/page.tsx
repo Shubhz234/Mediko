@@ -30,7 +30,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="mx-auto mt-6 max-w-2xl text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed"
+          className="mx-auto mt-6 max-w-2xl text-base md:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed"
         >
           Provide 24/7 intelligent support using conversational AI. Triage
           symptoms, book appointments, and deliver empathetic care with
@@ -42,17 +42,17 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="mt-10 flex flex-wrap justify-center gap-4"
+          className="mt-12 flex flex-wrap justify-center gap-4"
         >
           <Link href="/sign-in">
-            <Button className="w-40 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-800 text-white shadow-md hover:shadow-lg hover:scale-[1.02] transition">
+            <Button className="w-40 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-800 text-white shadow-md hover:shadow-xl hover:scale-[1.05] transition-all duration-300 font-semibold">
               Get Started
             </Button>
           </Link>
           <Link href="/learn-more">
             <Button
               variant="outline"
-              className="w-40 rounded-xl border border-neutral-300 bg-white text-slate-800 hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
+              className="w-40 rounded-xl border-2 border-emerald-600 bg-white text-emerald-700 hover:bg-emerald-50 hover:scale-[1.05] transition-all duration-300 font-semibold dark:border-emerald-500 dark:bg-neutral-900 dark:text-emerald-400 dark:hover:bg-emerald-950"
             >
               Learn More
             </Button>
@@ -64,7 +64,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
-          className="mt-20 mx-auto w-full max-w-4xl overflow-hidden rounded-2xl border border-neutral-200 shadow-lg dark:border-neutral-800"
+          className="mt-24 mx-auto w-full max-w-4xl overflow-hidden rounded-2xl border border-neutral-200 shadow-xl dark:border-neutral-800"
         >
           <img
             src="https://assets.aceternity.com/pro/aceternity-landing.webp"
@@ -75,7 +75,7 @@ export default function Home() {
       </div>
 
       {/* Features */}
-      <div className="px-6">
+      <div className="px-6 mt-32">
         <FeatureBentoGrid />
       </div>
     </div>
@@ -95,14 +95,14 @@ const Navbar = () => {
         {/* Right side */}
         {!user ? (
           <Link href="/sign-in">
-            <Button className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white">
+            <Button className="rounded-lg bg-emerald-600 hover:bg-emerald-700 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 text-white font-semibold">
               Login
             </Button>
           </Link>
         ) : (
           <div className="flex items-center gap-4">
             <Link href="/dashboard">
-              <Button variant="default" className="rounded-lg">
+              <Button variant="default" className="rounded-lg bg-emerald-600 hover:bg-emerald-700 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 text-white font-semibold">
                 Dashboard
               </Button>
             </Link>

@@ -14,18 +14,30 @@ import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
 export function FeatureBentoGrid() {
   return (
-    <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
-      {items.map((item, i) => (
-        <BentoGridItem
-          key={i}
-          title={item.title}
-          description={item.description}
-          header={item.header}
-          className={cn("[&>p:text-lg]", item.className)}
-          icon={item.icon}
-        />
-      ))}
-    </BentoGrid>
+    <div className="max-w-7xl mx-auto">
+      {/* Section Header */}
+      <div className="text-center mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">
+          Powerful AI Features
+        </h2>
+        <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+          Experience the future of healthcare with our advanced AI-powered medical consultation platform
+        </p>
+      </div>
+      
+      <BentoGrid className="md:auto-rows-[22rem]">
+        {items.map((item, i) => (
+          <BentoGridItem
+            key={i}
+            title={item.title}
+            description={item.description}
+            header={item.header}
+            className={cn("[&>p:text-lg]", item.className)}
+            icon={item.icon}
+          />
+        ))}
+      </BentoGrid>
+    </div>
   );
 }
 
@@ -194,51 +206,39 @@ const SkeletonFour = () => {
         variants={first}
         className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
       >
-        <img
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="rounded-full h-10 w-10"
-        />
-        <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
-          Just code in Vanilla Javascript
+        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600 flex items-center justify-center mb-2">
+          <span className="text-white text-xs font-bold">GP</span>
+        </div>
+        <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-2">
+          General Physician
         </p>
-        <p className="border border-red-500 bg-red-100 dark:bg-red-900/20 text-red-600 text-xs rounded-full px-2 py-0.5 mt-4">
-          Delusional
+        <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-2">
+          Available
         </p>
       </motion.div>
       <motion.div className="h-full relative z-20 w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center">
-        <img
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="rounded-full h-10 w-10"
-        />
-        <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
-          Tailwind CSS is cool, you know
+        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center mb-2">
+          <span className="text-white text-xs font-bold">CD</span>
+        </div>
+        <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-2">
+          Cardiologist
         </p>
-        <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-4">
-          Sensible
+        <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-2">
+          Available
         </p>
       </motion.div>
       <motion.div
         variants={second}
         className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
       >
-        <img
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="rounded-full h-10 w-10"
-        />
-        <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
-          I love angular, RSC, and Redux.
+        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-purple-600 flex items-center justify-center mb-2">
+          <span className="text-white text-xs font-bold">DR</span>
+        </div>
+        <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-2">
+          Dermatologist
         </p>
-        <p className="border border-orange-500 bg-orange-100 dark:bg-orange-900/20 text-orange-600 text-xs rounded-full px-2 py-0.5 mt-4">
-          Helpless
+        <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-2">
+          Available
         </p>
       </motion.div>
     </motion.div>
@@ -280,83 +280,78 @@ const SkeletonFive = () => {
         variants={variants}
         className="flex flex-row rounded-2xl border border-neutral-100 dark:border-white/[0.2] p-2  items-start space-x-2 bg-white dark:bg-black"
       >
-        <img
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="rounded-full h-10 w-10"
-        />
+        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600 flex items-center justify-center flex-shrink-0">
+          <span className="text-white text-xs font-bold">AI</span>
+        </div>
         <p className="text-xs text-neutral-500">
-          There are a lot of cool framerworks out there like React, Angular,
-          Vue, Svelte that can make your life ....
+          Your consultation report shows normal vital signs. Blood pressure is within healthy range. Continue current medication...
         </p>
       </motion.div>
       <motion.div
         variants={variantsSecond}
         className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center justify-end space-x-2 w-3/4 ml-auto bg-white dark:bg-black"
       >
-        <p className="text-xs text-neutral-500">Use PHP.</p>
-        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 shrink-0" />
+        <p className="text-xs text-neutral-500">Thank you, Doctor!</p>
+        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 shrink-0" />
       </motion.div>
     </motion.div>
   );
 };
 const items = [
   {
-    title: "AI Content Generation",
+    title: "Voice-First Consultations",
     description: (
       <span className="text-sm">
-        Experience the power of AI in generating unique content.
+        Natural conversations with AI medical specialists using advanced voice recognition.
       </span>
     ),
     header: <SkeletonOne />,
     className: "md:col-span-1",
-    icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
+    icon: <IconClipboardCopy className="h-4 w-4 text-emerald-600" />,
   },
   {
-    title: "Automated Proofreading",
+    title: "Intelligent Symptom Analysis",
     description: (
       <span className="text-sm">
-        Let AI handle the proofreading of your documents.
+        Advanced AI algorithms analyze symptoms and provide accurate health assessments.
       </span>
     ),
     header: <SkeletonTwo />,
     className: "md:col-span-1",
-    icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
+    icon: <IconFileBroken className="h-4 w-4 text-emerald-600" />,
   },
   {
-    title: "Contextual Suggestions",
+    title: "24/7 Medical Support",
     description: (
       <span className="text-sm">
-        Get AI-powered suggestions based on your writing context.
+        Round-the-clock access to AI medical consultations whenever you need them.
       </span>
     ),
     header: <SkeletonThree />,
     className: "md:col-span-1",
-    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
+    icon: <IconSignature className="h-4 w-4 text-emerald-600" />,
   },
   {
-    title: "Sentiment Analysis",
+    title: "Specialist Doctor Network",
     description: (
       <span className="text-sm">
-        Understand the sentiment of your text with AI analysis.
+        Access to various AI medical specialists from general physicians to cardiologists.
       </span>
     ),
     header: <SkeletonFour />,
     className: "md:col-span-2",
-    icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
+    icon: <IconTableColumn className="h-4 w-4 text-emerald-600" />,
   },
 
   {
-    title: "Text Summarization",
+    title: "Detailed Health Reports",
     description: (
       <span className="text-sm">
-        Summarize your lengthy documents with AI technology.
+        Comprehensive medical reports generated after each consultation for your records.
       </span>
     ),
     header: <SkeletonFive />,
     className: "md:col-span-1",
-    icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
+    icon: <IconBoxAlignRightFilled className="h-4 w-4 text-emerald-600" />,
   },
 ];
