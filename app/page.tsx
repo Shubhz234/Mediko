@@ -1,13 +1,38 @@
 "use client";
 
+"use client";
+
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { FeatureBentoGrid } from "./_components/FeatureBentoGrid";
 import { useUser, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import MedikoLogo from "@/context/MedikoLogo";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const [isUnlocked, setIsUnlocked] = useState(false);
+
+  useEffect(() => {
+    // Check if the website is unlocked
+    const unlocked = localStorage.getItem("mediko_unlocked");
+    if (!unlocked) {
+      router.push("/lock");
+    } else {
+      setIsUnlocked(true);
+    }
+  }, [router]);
+
+  if (!isUnlocked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-emerald-600"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative flex flex-col items-center justify-center">
       <Navbar />
